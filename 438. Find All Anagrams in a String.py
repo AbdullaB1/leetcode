@@ -3,7 +3,7 @@ from collections import Counter
 
 
 class Solution:
-    # очень короткое решение вовы
+    # очень короткое решение Вовы
     def find_anagrams(s: str, p: str):
         ans = []
         count = Counter(p)
