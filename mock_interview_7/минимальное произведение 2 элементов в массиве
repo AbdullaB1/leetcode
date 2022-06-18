@@ -1,0 +1,41 @@
+https://code.yandex-team.ru/deprecated/d8ed3123-4cf1-46de-9610-33360ddac66b
+
+// 1. Минимальное произведение
+int minPow(int[] arr) {
+    int minNeg = 0, minPos = 0, minPos2 = 0, maxNeg = 0, maxNeg2 = 0, maxPos = 0;
+    boolean containNegative = false;
+    boolean containPositive = false;
+    
+    for (int i : arr) {
+        if (i < 0) {
+            if (minNeg > i)
+                minNeg = i;
+                
+            if (maxNeg < i) {
+                maxNeg2 = maxNeg;
+                maxNeg = i;
+            }
+                
+            containNegative = true;
+        } else {
+            if (minPos > i) {
+                minPos2 = minPos;
+                minPos = i;
+            }
+                
+            if (maxPos < i)
+                maxPos = i;
+                
+            containPositive = true;
+        }
+    }
+    
+    if(containNegative && containPositive) {
+        return minNeg * maxPos;
+    } else if (containNegative && !containPositive) {
+        return maxNeg * maxNeg2;
+    } else {
+        return minPos * minPos2;
+    }
+    
+}

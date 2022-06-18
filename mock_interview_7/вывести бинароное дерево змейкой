@@ -1,0 +1,56 @@
+https://code.yandex-team.ru/deprecated/cfa9841a-6282-4eeb-8899-7a8704432645
+
+
+Задано бинарное дерево с некоторыми метками в узлах (например, числа).
+Необходимо вывести метки в порядке обхода дерева по уровням "змейкой":
+    первый уровень слева направо, второй справа налево, третий слева направо и т.д.
+          6
+     4        8
+  1    5    9   10
+-1 2       7      11
+
+6
+8 4
+1 5 9
+    
+     
+struct h
+{
+    size_t val;
+    h * left;
+    r * rigth;
+};
+
+1     1
+1+2   3
+1+2+4 7  = 2^3-1
+       
+void print_Z( size_t deep, const std::vector<h*> & vec)
+{
+    std::vector<h*> vect_next_layer;
+    if( (deep & 1) == 0)
+        for( auto el: vec )
+        {
+            printf("%d", el->val );
+            if( el->left ) vect_next_layer.pushback(el->left);
+            if( el->rigth ) vect_next_layer.pushback(el->rigth);
+        }
+    else
+        for( auto it = vec.rbegin(); it != vec.rend(); it++ )
+        {
+            printf("%d", it->val );
+            if( it->rigth ) vect_next_layer.pushback(it->rigth);
+            if( it->left ) vect_next_layer.pushback(it->left);
+        }
+
+    printf("\n" );
+    print_Z( deep + 1, vect_next_layer );
+}
+
+
+{
+    std::vector<h*> vec;
+    h * root = new h( 6, new h(8, NULL, NULL), new h(4, NULL, NULL));
+    vec.pushback(root);
+    print_Z( 0, vec );
+}

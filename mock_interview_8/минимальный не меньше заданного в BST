@@ -1,0 +1,66 @@
+; https://code.yandex-team.ru/deprecated/5bd1fb95-096a-4db1-b4f8-652d39b945e3
+
+
+
+// Дано бинарное дерево поиска, которое хранит некоторые целые значения. Необходимо найти такой минимальный элемент, который не меньше некоторого заданного порогового значения.
+
+class Node {
+  private final int value;
+  private final Node left;
+  private final Node right;
+
+  public Node(int value, Node left, Node right) {
+    this.value = value;
+    this.left = left;
+    this.right = right;
+  }
+
+  public int getValue() {
+     return value;
+  }
+  
+  public Node getLeft() {
+     return left;
+  }
+
+  public Node getRight() {
+     return right;
+  }
+}
+
+...
+4
+       6
+  3        9
+1   4    7   10
+
+node: 6
+6 > 4
+node: 3
+3 < 4
+node: 4
+4 == 4
+return 4
+
+node: 6
+6 < 7
+node: 9
+9 > 7
+node: 7
+7 == 7
+return 7
+
+
+Integer getMin(Node node, int minThreshold) {
+    if (node == null) {
+        return null;
+    }
+    if (node.getValue() < minThreshold) {        // root do not satisfy
+        return getMin(node.getRight(), minThreshold);
+    } else {
+        if (node.getLeft() == null) {
+            return node.getValue();
+        }
+        return getMin(node.getLeft(), minThreshold);
+    }
+}

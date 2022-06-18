@@ -1,0 +1,11 @@
+// На входе массив
+var arr = [
+ {name: 'width', value: 10}, 
+ {name: 'height', value: 20}
+];
+
+// На выходе объект {width: 10, height: 20}
+const result = arr.reduce((acc, { name, value}) => {
+    acc[name] = value;
+    return acc;
+}, {});

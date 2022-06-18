@@ -1,0 +1,19 @@
+https://code.yandex-team.ru/deprecated/7dacfde9-86b8-48ac-bfd5-7a080efe4aee
+
+2015..toString(2); // => 11111011111
+
+function getNextBinPal(num) {
+    let currentNumber = num + 1;
+    const getNextNumberStr = () => currentNumber.toString(2);
+    
+    const getReversedNumberStr =  () => getNextNumberStr().split('').reverse().join('');
+    
+    while (getNextNumberStr() !== getReversedNumberStr()) {
+        currentNumber = currentNumber + 1;
+    }
+    
+    return currentNumber;
+}
+
+getNextBinPal(2014); // => 2015
+getNextBinPal(2015); // => ???

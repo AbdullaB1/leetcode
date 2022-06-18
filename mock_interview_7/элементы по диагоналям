@@ -1,0 +1,27 @@
+2) Вывести последовательно все наклоненные вправо диагонали матрицы.
+Есть матрица NxN целых чисел. Нужно вывести последовательно все ее наклоненные вправо диагонали, 
+начиная с левого верхнего угла. Например для матрицы
+1, 2, 3
+4, 5, 6
+7, 8, 9
+Вывод будет такой:
+1
+4, 2
+7, 5, 3
+8, 6
+9
+*/
+func printRightDiagonals(in matrix: Dictionary<(Int, Int), Int>) {
+    var row: Int = 0
+    var column: Int = 0
+    var diagonal = Array<Int>()
+    
+    while(row < matrix.count && column < matrix.count ) {
+        if row == column 
+    }
+    
+    for (index, element) in matrix.enumerate() {
+        
+        if index.0 == index.1
+    }
+}

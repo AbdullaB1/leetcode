@@ -1,0 +1,45 @@
+https://code.yandex-team.ru/deprecated/4c5ac94d-bf84-4b35-9e2b-2bd558cc40a7
+
+Есть два сортированных списка (массива). Нужно написать функцию, которая делает 
+новый сортированный список с объединением или пересечением элементов этих двух 
+списков.
+
+Пример:
+1-ый список: 1, 2, 2, 5, 7, 14
+2-й список: 4, 6, 6, 7, 9, 14, 15
+
+Пересечение: 7, 14
+
+a = [1, 2, 2, 5, 7, 14]
+b = [2, 4, 6, 6, 7, 9, 14, 15]
+c = []
+
+O(N^2)
+for sym in a:
+    if sym in c:
+        break;
+    for sym2 in b:
+        if sym == sym2:
+            c.append(sym)
+            break;
+            
+            
+i = 0
+s = 0
+if a[0] > b[0]:
+    
+while i < len(a):
+    while k < len(b):
+        if a[i] == b[k]:
+            c.append(a[i])
+            k += 1
+            break;
+        elif a[i] > b[k]:
+            k += 1
+        elif a[i] < b[k]:
+            if i < len(a):
+                i += 1
+            else:
+                i = len(a)
+                k = len(b)
+    i += 1

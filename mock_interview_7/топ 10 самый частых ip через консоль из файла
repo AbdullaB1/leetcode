@@ -1,0 +1,10 @@
+https://code.yandex-team.ru/deprecated/ae2ffe10-410a-4f69-b8c9-72bd0eaf26c9
+
+# Дан большой файл формата
+# access.log
+# <host> \t <ip> \t <page>
+# Требуется при помощи консольных утилит найти топ10 самых частых айпишников с указанием их частот.
+
+cat access.log | unique -c | sort |head -10
+
+потом старая задача на анаграммы
