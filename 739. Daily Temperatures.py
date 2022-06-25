@@ -28,7 +28,9 @@ class Solution:
 
         return answer
 
-    # через стеек с начала
+
+class Solution_1:
+    # через стеек, итерируемся с начала массива
     # преимущество в том, что можно обрабатывать данные в потоке
     def dailyTemperatures(self, temps: List[int]) -> List[int]:
         result = [0] * len(temps)
@@ -38,22 +40,23 @@ class Solution:
                 result[stack[-1]] = i - stack[-1]
                 stack.pop()
             stack.append(i)
-
         return result
 
+
+class Solution_2:
     # итетируемся с конца массива
-    def dailyTemperatures_1(self, temps: List[int]) -> List[int]:
+    def dailyTemperatures(self, temps: List[int]) -> List[int]:
         result = [0] * len(temps)
         stack = []
         for i in range(len(temps) - 1, -1, -1):
+            # важное отличие в том, что если в стеке значени совпадают, 
+            # то старое нужно удалить, потому что появилось более свежее, 
+            # дающее нам в препективе меньшую разницу
             while stack and temps[stack[-1]] <= temps[i]:
                 stack.pop()
-            if not stack:
-                result[i] = 0
-            else:
+            if stack:
                 result[i] = stack[-1] - i
             stack.append(i)
-
         return result
 
 
