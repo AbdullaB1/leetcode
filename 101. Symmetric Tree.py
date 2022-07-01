@@ -1,4 +1,3 @@
-# Definition for a binary tree node.
 from typing import Optional
 from collections import deque
 
@@ -11,6 +10,8 @@ class TreeNode:
 
 
 class Solution:
+    """рекурсивное отражение дерева и проверка равенства 2 деревьев через обход в ширину"""
+
     def reverseTree(self, head: Optional[TreeNode]):
         if not head:
             return head
@@ -39,3 +40,36 @@ class Solution:
                 q.append((left.right, right.right))
 
         return True
+
+
+class Solution_1:
+    """полностью рукурсивное решение"""
+
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+        self.revers(root.right)
+        return self.is_tree_equals(root.left, root.right)
+
+    def is_tree_equals(self, node_1: Optional[TreeNode], node_2: Optional[TreeNode]) -> bool:
+        if not node_1 and not node_2:
+            return True
+        if not node_1:
+            return False
+        if not node_2:
+            return False
+        if node_1.val != node_2.val:
+            return False
+        if not self.is_tree_equals(node_1.left, node_2.left):
+            return False
+        if not self.is_tree_equals(node_1.right, node_2.right):
+            return False
+        return True
+
+    def revers(self, node: Optional[TreeNode]) -> bool:
+        if not node:
+            return node
+
+        node.left, node.right = node.right, node.left
+        self.revers(node.left)
+        self.revers(node.right)
