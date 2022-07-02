@@ -1,3 +1,11 @@
+"""
+Проверка массива на монотонность
+[1,2,2,3] -> True
+[6,5,4,4] -> True
+[1,3,2] -> False
+"""
+
+
 def is_monotonic_1(nums: list[int]) -> bool:
     if len(nums) <= 2:
         return True

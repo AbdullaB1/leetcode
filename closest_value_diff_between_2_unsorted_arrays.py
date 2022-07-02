@@ -1,5 +1,10 @@
-from email.errors import FirstHeaderLineIsContinuationDefect
 import math
+
+
+"""
+Наименьшая по модулю разница значений между двумя несортированными массивами
+[1,2,11,5],[4,12,19,23,127] -> 1
+"""
 
 
 def find_closest(arr_1: list[int], arr_2: list[int]) -> int:
