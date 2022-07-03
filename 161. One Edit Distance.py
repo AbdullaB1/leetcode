@@ -29,19 +29,18 @@ def is_strings_equal_after_one_change(first: str, second: str) -> bool:
 
 
 def isOneEditDistance(first: str, second: str) -> bool:
-    m = len(first)
-    n = len(second)
-
-    if m > n:
+    # удобней считать, что втрорая строка не короче первой
+    if len(first) > len(second):
         first, second = second, first
-        m, n = n, m
 
-    for i in range(m):
+    for i in range(len(first)):
         if first[i] != second[i]:
-            if m == n:
+            if len(first) == len(second):
                 return first[i + 1:] == second[i + 1:]
             return first[i:] == second[i + 1:]
-    return m + 1 == n
+    # если до этого не было ни одного несовпадения,
+    # занчит нуно просто проверть, что вторая не слтшкмо длинная
+    return len(second) - len(first) <= 1
 
 
 def is_strings_equal_after_one_change(word1: str, word2: str) -> bool:
