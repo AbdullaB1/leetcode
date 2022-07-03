@@ -104,3 +104,32 @@ class Solution:
                 results.append(i)
 
         return results
+
+
+class Solution:
+    """укороченное решение"""
+
+    def findAnagrams(self, source: str, target: str) -> list[int]:
+        if len(source) < len(target):
+            return []
+        result = []
+        chars = defaultdict(int, Counter(target))
+        for i in range(len(source)):
+            if i >= len(target):
+                addc = source[i - len(target)]
+                chars[addc] -= 1
+                if chars[addc] == 0:
+                    chars.pop(addc)
+            remc = source[i]
+            chars[remc] += 1
+            if chars[remc] == 0:
+                chars.pop(remc)
+            if not chars:
+                result.append(i - len(target) + 1)
+        return result
+
+
+print(Solution().findAnagrams(
+    "cbaebabacd",
+    "abc",
+))
