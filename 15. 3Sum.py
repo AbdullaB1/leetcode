@@ -1,40 +1,6 @@
-from typing import List
-
-
-class Solution:
-    # используем идею задачи 2 sum
-    # для избежания повторов не берем подряд идущие одинаковые значения для указателей i и l
-    def threeSum_1(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
-        results = []
-        prev_i = None
-        for i in range(len(nums) - 2):
-            # нет смысла идти в отсортированном массиве дальше,
-            # если первый указатель уже больше 0, так как сумма должна равняться 0
-            if nums[i] == prev_i or nums[i] > 0:
-                continue
-            l = i + 1
-            r = len(nums) - 1
-            prev_l = None
-            target = - nums[i]
-            while l < r:
-                if nums[l] == prev_l:
-                    l += 1
-                    continue
-                if nums[l] + nums[r] == target:
-                    results.append([nums[i], nums[l], nums[r]])
-                    prev_l = nums[l]
-                    l += 1
-                elif nums[l] + nums[r] < target:
-                    l += 1
-                else:
-                    r -= 1
-            prev_i = nums[i]
-
-        return results
-
-    # без сортировки
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+class Solution:    
+    # без сортировки c доп памятью, более котороткое решение
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
         res, dups = set(), set()
         for i, val1 in enumerate(nums):
             if val1 not in dups:
@@ -46,9 +12,44 @@ class Solution:
                         res.add(tuple(sorted((val1, val2, complement))))
                     seen[val2]
         return res
-
-
-s = Solution()
-print(
-    s.threeSum([-1, 0, 1, 2, -1, -4])
-)
+    
+    
+class Solution:
+    # используем идею задачи 2 sum для отсортированного массива
+    # для избежания повторов не берем подряд идущие одинаковые значения для указателей i и l
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        nums.sort()
+        result = []
+        prev_one = None
+        for i in range(len(nums) - 2):
+            # нет смысла идти в отсортированном массиве дальше, 
+            # если первый указатель уже больше 0, так как сумма должна равняться 0
+            if nums[i] > 0:
+                break
+            # для избежания дубликатов в ответе
+            if nums[i] == prev_one:
+                continue
+            target = -nums[i]
+            l = i + 1
+            r = len(nums) - 1
+            prev_two = None
+            while l < r:
+                # для избежания дубликатов в ответе
+                if nums[l] == prev_two:
+                    l += 1
+                    continue
+                curr = nums[l] + nums[r]
+                if curr == target:
+                    result.append([nums[i], nums[l], nums[r]])
+                    # нужно обновлять prev_two именно здесь, до того как мы успели сделать l += 1
+                    prev_two = nums[l]
+                    l += 1
+                    # r -= 1
+                elif curr < target:
+                    l += 1
+                else:
+                    r -= 1
+                # prev_two = nums[l]
+            prev_one = nums[i]
+        return result
+    
