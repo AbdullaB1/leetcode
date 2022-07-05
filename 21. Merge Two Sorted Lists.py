@@ -1,4 +1,3 @@
-# Definition for singly-linked list.
 from typing import Optional
 
 
@@ -14,7 +13,7 @@ class Solution:
         second = l2
         merged = ListNode(0)
         result = merged
-
+        
         while first and second:
             if first.val < second.val:
                 merged.next = first
@@ -22,17 +21,13 @@ class Solution:
             else:
                 merged.next = second
                 second = second.next
-
+            
             merged = merged.next
-
-        while first:
+        
+        if first:
             merged.next = first
-            first = first.next
-            merged = merged.next
-
-        while second:
+            
+        if second:
             merged.next = second
-            second = second.next
-            merged = merged.next
-
+            
         return result.next
