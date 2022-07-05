@@ -1,15 +1,18 @@
+from typing import Optional
+
+
 class Node:
     def __init__(self, key=None, val=None):
         self.key = key
         self.val = val
-        self.next = None
-        self.prev = None
+        self.next: Optional[Node]  = None
+        self.prev: Optional[Node]  = None
 
 
 class DoublyLinkedList:
     def __init__(self):
-        self.head = Node()
-        self.tail = Node()
+        self.head: Optional[Node] = Node()
+        self.tail: Optional[Node] = Node()
         self.len = 0
 
         self.head.next = self.tail
@@ -62,3 +65,4 @@ ddl.print_list()
 ddl.move_to_head(a)
 ddl.print_list()
 print(len(ddl))
+{1:11}.popitem(last=False)
