@@ -6,6 +6,7 @@ class Solution:
             if d == "..":
                 if result:
                     result.pop()
+            # elif d - против путей вида "//home/"
             elif d and d != '.':
                 result.append(d)
         return '/' + '/'.join(result)
