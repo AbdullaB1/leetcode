@@ -24,6 +24,32 @@ class LRUCacheWithOrderedDict:
             self.orderedDict.popitem(last=False)
 
 
+class LRUCache:
+    """решение, использующее то, что в питоне ключи хранятся в LIFO"""
+    def __init__(self, capacity):
+        self.cache = {}
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        val = self.cache.pop(key)
+        self.cache[key] = val
+        return val
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache.pop(key)
+            self.cache[key] = value
+            return
+        self.cache[key] = value
+        if len(self.cache) > self.capacity:
+            # таким способом можно удалить элемент из начала
+            for key in self.cache:
+                self.cache.pop(key)
+                break
+
+
 # реализация через двусвязный список и словарь
 class Node:
     def __init__(self, key=None, val=None):
