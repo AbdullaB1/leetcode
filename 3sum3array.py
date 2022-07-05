@@ -2,76 +2,66 @@ from collections import Counter
 
 
 def three_sum_in_three_array(target: int, arr_1: list[int], arr_2: list[int], arr_3: list[int]) -> int:
+    """
+    решение бес сортировки и с доп памятью
+    можно оптимизировать 2 вложенных цикла на манер следующего решения с сортировкой, 
+    сейчас там полный перебор 
+    """
     counter_1 = Counter(arr_1)
     result = 0
     for num_2 in arr_2:
         for num_3 in arr_3:
             if (target - num_2 - num_3) in counter_1:
                 result += counter_1[target - num_2 - num_3]
-                print(target - num_2 - num_3, num_2, num_3, "-", counter_1[target - num_2 - num_3])
-    return result
+                # print(target - num_2 - num_3, num_2, num_3, "-", counter_1[target - num_2 - num_3])
+    return result 
 
 
-def group_by(nums: list[int]) -> list[list[int, int]]:
-    if not nums:
-        return []
-    result = [[nums[0], 1]]
-    for i in range(1, len(nums)):
-        if nums[i - 1] == nums[i]:
-            result[-1][1] += 1
-        else:
-            result.append([nums[i], 1])
-    return result
-
-def two_sum_in_two_array(target: int, arr_1: list[int], arr_2: list[int]) -> int:
+def three_sum_in_three_array(target: int, arr_1: list[int], arr_2: list[int], arr_3: list[int]) -> int:
+    """
+    три массива, найти количество таких троек i, j, k где arr_1[i] + arr_2[j] + arr_3[k] == target
+    1 <= len(arr_1) <= len(arr_2) <= len(arr_3)
+    """
+    arr_1.sort()
+    arr_2.sort()
+    arr_3.sort()
     result = 0
-    arr_1 = sorted(group_by(arr_1))
-    arr_2 = sorted(group_by(arr_2))
-    # print(arr_1)
-    # print(arr_2)
-    i = 0
-    j = len(arr_2) - 1
-    while i < len(arr_1) and j >= 0:
-        # print(f'{arr_1[i][0]=} {i=}')
-        # print(f'{arr_2[j][0]=} {j=}')
-        curr_sum = arr_1[i][0] + arr_2[j][0]
-        if curr_sum == target:
-            result += arr_1[i][1] * arr_2[j][1]
-            print(arr_1[i], arr_2[j])
-            i += 1
-        elif curr_sum > target:
-            j -= 1
-        else:
-            i += 1
-    
+    for i, num_1 in enumerate(arr_1):
+        l =  0
+        r = len(arr_3) -1
+        sub_target = target - num_1
+        while l < len(arr_2) and  r >= 0:
+            if arr_2[l] + arr_3[r] < sub_target:
+                l += 1
+                continue
+            if arr_2[l] + arr_3[r] > sub_target:
+                r -= 1
+                continue
+            l_count = 1
+            l += 1
+            while l < len(arr_2) and arr_2[l] == arr_2[l - 1]:
+                l_count += 1
+                l += 1
+            r_count = 1
+            r -= 1
+            while r >= 0 and arr_3[r] == arr_3[r + 1]:
+                r_count += 1
+                r -= 1 
+            result += l_count * r_count
+            # print(f"{result=} {i=} {l=} {l_count=} {r=} {r_count=}")
     return result
 
 
 print(
-    two_sum_in_two_array(
-        8, [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]
+    three_sum_in_three_array(
+        4, 
+        [2, 1, 1],
+        [2, 1, 1],
+        [1, 2, 1],
     )
 )
 
-
-# def three_sum_in_three_array(target: int, arr_1: list[int], arr_2: list[int], arr_3: list[int]) -> int:
-#     arr_1 = sorted(group_by(arr_1))
-#     arr_2 = sorted(group_by(arr_2))
-#     arr_3 = sorted(group_by(arr_3))
-#     result = 0
-#     for num_1, cnt_1 in arr_1:
-
-        
-
-# print(
-#     three_sum_in_three_array(
-#         # 3, 
-#         # [1, 1, 1],
-#         # [1, 1, 1],
-#         # [1, 1, 1],
-#         4, 
-#         [2, 1, 1],
-#         [2, 1, 1],
-#         [1, 2, 1],
-#     )
-# )
+assert three_sum_in_three_array(3, [1, 1, 1], [1, 1, 1], [1, 1, 1]) == 27
+assert three_sum_in_three_array(4, [1, 1, 1], [1, 1, 1], [1, 1, 1]) == 0
+assert three_sum_in_three_array(2, [1, 1, 1], [1, 1, 1], [1, 1, 1]) == 0
+assert three_sum_in_three_array(4, [2, 1, 1], [2, 1, 1], [2, 1, 1]) == 12
