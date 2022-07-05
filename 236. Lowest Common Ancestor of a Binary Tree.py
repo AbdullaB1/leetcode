@@ -1,7 +1,6 @@
 from typing import List
 
 
-# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -10,27 +9,32 @@ class TreeNode:
 
 
 class Solution:
-    # рекурсивный метод
-    # в описании решения есть более хитрый способ рещения через стек за один проход по дереву
-    def lowestCommonAncestor_1(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    """
+    рекурсивный метод
+    в описании решения есть более хитрый способ решения через стек за один проход по дереву без рекурсии
+    """
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         self.lca = None
-        self.travers(root, p, q)
+        self.traverse(root, p, q)
         return self.lca
-
-    def travers(self, node: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> bool:
-        left = right = mid = False
+    
+    
+    def traverse(self, node: TreeNode, p: TreeNode, q: TreeNode) -> bool:
+        left, right, mid = False, False, False
         if node.left:
-            left = self.travers(node.left, p, q)
+            left = self.traverse(node.left, p, q)
         if node.right:
-            right = self.travers(node.right, p, q)
-        if node.val == p.val or node.val == q.val:
-            mid = True
-        if mid + left + right >= 2:
+            right = self.traverse(node.right, p, q)
+        mid = node.val == p.val or node.val == q.val
+        if left + right + mid >= 2:
             self.lca = node
-        return mid or left or right
+        return left or right or mid
+        
 
-    # Работает сильно медленней
-
+class Solution_1: 
+    """
+    работает сильно медленней, находим путь до корня для p и q, затем ищем первое совпадение в путях
+    """  
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         p_path = self.getNodePath(root, p.val)
         q_path = self.getNodePath(root, q.val)
@@ -38,7 +42,7 @@ class Solution:
         for i in range(start_index - 1, -1, -1):
             if p_path[i] == q_path[i]:
                 return TreeNode(p_path[i])
-
+        
     def getNodePath(self, root: 'TreeNode', target: int) -> List[int]:
         stack = [[root, [root.val]]]
         while stack:
@@ -49,3 +53,4 @@ class Solution:
                 stack.append([node.left, path + [node.left.val]])
             if node.right:
                 stack.append([node.right, path + [node.right.val]])
+     
