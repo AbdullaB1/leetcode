@@ -20,6 +20,9 @@ def diff(arr_1: list[int], arr_2: list[int]) -> list[int]:
             result.append(arr_1[p1])
             p1 += 1
         elif arr_1[p1] == arr_2[p2]:
+            # двигаем только p1 и именно его, 
+            # иначе некоторые числа из первого массива в итоге могут потеряться
+            # assert diff([1, 1, 2], [1]) == [2]
             p1 += 1
         else:
             p2 += 1
@@ -29,6 +32,9 @@ def diff(arr_1: list[int], arr_2: list[int]) -> list[int]:
     return result
 
 
+assert diff([1, 1, 1], [1]) == []
+assert diff([1, 1, 1, 2], [1]) == [2]
+assert diff([1, 1, 2, 3], [1]) == [2, 3]
 assert diff([2, 2, 3, 5, 101], [100, 101, 102]) == [2, 2, 3, 5]
 assert diff([100, 101, 102], [2, 2, 3, 5, 101]) == [100, 102]
 assert diff([1, 1, 1, 1, 1, 2, 2, 3], [1, 1, 1, 1, 2, 2, 2, 2, 4, 6, 7]) == [3]
