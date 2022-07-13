@@ -2,7 +2,7 @@ class NumMatrix:
     """
     premium (решить потом) - https://leetcode.com/problems/range-sum-query-2d-mutable/
     """
-    def __init__(self, matrix: List[List[int]]):
+    def __init__(self, matrix: list[list[int]]):
         self.pref: list[list[int]] = matrix
         self.calculate_pref()
 
