@@ -54,12 +54,10 @@ class Codec:
         while stack:
             node = stack.pop()
             node = node.right
-            if node:
-                while node:
-                    res.append(node.val)
-                    stack.append(node)
-                    node = node.left
-        print(res)
+            while node:
+                res.append(node.val)
+                stack.append(node)
+                node = node.left
         return ' '.join(map(str, res))
     
     def deserialize(self, data: str) -> Optional[TreeNode]:
@@ -79,3 +77,16 @@ class Codec:
         node.left = self.travers(q, min_val, val)
         node.right = self.travers(q, val, max_val)
         return node
+
+
+codec = Codec()
+root = TreeNode(5)
+root.left = TreeNode(3)
+root.left.left = TreeNode(2)
+root.left.right = TreeNode(4)
+root.right = TreeNode(7)
+root.right.left = TreeNode(6)
+root.right.right = TreeNode(8)
+print(serialized := codec.serialize(root))
+print(deserialized := codec.deserialize(serialized))
+assert codec.serialize(root) == codec.serialize(deserialized)
